@@ -17,6 +17,9 @@ ul,ol{
     width: 1200px;
     margin: 0 auto;
 }
+.shadow{
+    cursor: pointer;
+}
 .top-nav{
     background-color: black;
     width: 100%;
@@ -530,4 +533,50 @@ ul,ol{
 .footer>div>img:nth-child(5){
     float: right;
     margin: 0;
+}
+.fixed_list2{
+    width: 80px;
+    background-color: white;
+    position: fixed;
+    top: 400px;
+    right: 0;
+    border-radius: 10px;
+}
+.fixed_list2 div{
+    padding-top: 50px;
+    width: 80px;
+    height: 25px;
+    text-align: center;
+    font-size: 14px;
+    color: gray;
+    position: relative;
+    overflow: hidden;
+}
+.fixed_list2>div:hover{
+    color: red;
+}
+.fixed_list2>div::after{
+    position: absolute;
+    content: "";
+    display: block;
+    height: 40px;
+    width: 40px;
+    top: 5px;
+    left: 20px;
+    background-image: url(https://res8.vmallres.com/20210316/images/echannel/icon/icon-common.svg);
+}
+.fixed_list2>div:nth-child(1):after{
+    background-position: 0 -32px;
+}
+.fixed_list2>div:nth-child(2):after{
+    background-position: -40px -32px;
+}
+.fixed_list2>div:nth-child(3):after{
+    background-position: -80px -32px;
+}
+.fixed_list2>div:nth-child(4):after{
+    background-position: -120px -32px;
+}
+#last_top{
+    display: none;
 }

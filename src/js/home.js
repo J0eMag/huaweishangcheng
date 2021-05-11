@@ -28,24 +28,35 @@ let sk = 0;
 let nk = 0;
 let flag = true;
 let newInterval = null;
-if(document.cookie){
+if(document.cookie){//localstorage.getItem("name"),可以更换为本地存储登录，实现注销按钮功能
+    //let uname = localstorage.getItem("name");
     $(".login_li").text("您好");
-    $(".name_li").text(document.cookie.slice(5).slice(0,2)+"**")
-    $(".login_p").text("欢迎您,"+document.cookie.slice(5).slice(0,2)+"**")
+    $(".name_li").text(document.cookie.slice(5).slice(0,2)+"**")//uname.slice(0,2)
+    $(".login_p").text("欢迎您,"+document.cookie.slice(5).slice(0,2)+"**")//uname.slice(0,2)
     $out = $("<li></li>")
     $out.text("退出")
     $(".login_li").before($out)
-    $(".login_li").prev().click(function(){
+    $(".login_li").prev().click(function(){//退出弹出询问层
+        layer.confirm(`您确定要退出吗？`, {
+            icon:5,
+            skin: 'layui-layer-lan',
+            btn: ['残忍离开','再逛逛']
+        },()=>{
+            removeCookie("name")//localStorage.removeItem("name")
+            $(".login_li").html("<a href='http://localhost/huaweishangcheng/src/login.html'>登录</a>");
+            $(".name_li").html("<a href='http://localhost/huaweishangcheng/src/register.html'>注册</a>")
+            $(".login_p").html('您好，请<a href="http://localhost/huaweishangcheng/src/login.html">登录 </a><span> / </span><a href="http://localhost/huaweishangcheng/src/register.html">注册</a>')
+            $(this).remove();
+            parent.layer.closeAll();
+        },()=>{
+            parent.layer.closeAll();
+        });
         // var data = new Date();
         // data.setTime(data.getTime()-1000*60*60*8-1); // 当前时间的上一秒
         // document.cookie ='id=0;expires='+data+";path=/";
-        removeCookie("name")
-        $(".login_li").html("<a href='http://localhost/huaweishangcheng/src/login.html'>登录</a>");
-        $(".name_li").html('<a href="http://localhost/huaweishangcheng/src/register.html">注册</a>')
-        $(".login_p").html('您好，请<a href="http://localhost/huaweishangcheng/src/login.html">登录 </a><span> / </span><a href="http://localhost/huaweishangcheng/src/register.html">注册</a>')
-        $(this).remove();
     })
 }
+//封装请求函数
 function boxPromiseAjax(id,url,inurl,width,height = 290,moutherurl="http://localhost/huaweishangcheng/src/php/goods_box.php"){
     promiseAjax({
         url:moutherurl,
@@ -127,15 +138,18 @@ function boxPromiseAjax(id,url,inurl,width,height = 290,moutherurl="http://local
         });
     });
 }
+//为阴影效果标签添加移出事件(可在css文件中设置)
 shadows.forEach(item=>{
     item.onmouseout = function(){
         item.style.transition = 0.5 + "s";
     }
 });
+//顶部广告删除功能
 top_banner.onclick = function(){
     this.parentElement.remove();
     document.querySelector(".user").style.top = 100 + "px";
 }
+//第一部分商品展示模块请求
 promiseAjax({
     url:"http://localhost/huaweishangcheng/src/php/goods_list_one.php",
     data:{
@@ -211,9 +225,11 @@ promiseAjax({
         });
     });
 });
+//热销推荐轮播图控制左右轮播按钮消失
 if(gk === 0){
     lbtn.style.display = "none";
 }
+//热销推荐左右轮播按钮功能
 rbtn.onclick = function(){
     if(!flag){
         return false;
@@ -229,6 +245,7 @@ rbtn.onclick = function(){
         flag = true
     },500)
 }
+//热销推荐左右轮播按钮功能
 lbtn.onclick = function(){
     if(!flag){
         return false;
@@ -244,6 +261,7 @@ lbtn.onclick = function(){
         flag = true
     },500)
 }
+//大轮播图左右按钮
 show_rbtn.onclick = function(){
     sk++;
     for(let i = 0;i < show_pointers.length;i++){
@@ -256,6 +274,7 @@ show_rbtn.onclick = function(){
     show_pointers[sk].className = "active";
     show_imgs[sk].style.opacity = "1";
 }
+//大轮播图左右按钮
 show_lbtn.onclick = function(){
     sk--;
     for(let i = 0;i < show_pointers.length;i++){
@@ -268,6 +287,7 @@ show_lbtn.onclick = function(){
     show_pointers[sk].className = "active";
     show_imgs[sk].style.opacity = "1";
 }
+//大轮播图底部白点
 for(let num = 0;num < show_pointers.length;num++){
     show_pointers[num].index = num;
 }
@@ -282,6 +302,7 @@ show_pointers.forEach(item=>{
         show_imgs[sk].style.opacity = "1";
     }
 });
+//自动轮播
 newInterval = setInterval(()=>{
     sk++;
     for(let i = 0;i < show_pointers.length;i++){
@@ -302,6 +323,7 @@ hovers.forEach(item=>{
         item.childNodes[1].style.display = "none";
     }
 });
+//轮播公告(奇形怪状)
 setInterval(()=>{
     nk++;
     auto_new.style.top = -nk * 23 + "px"
@@ -310,17 +332,18 @@ setInterval(()=>{
         auto_new.style.top = -nk * 23 + "px"
     }
 },2000);
+//搜索框获取焦点热搜消失
 inp.onfocus = ()=>{
     sls.forEach(item=>{
         item.style.display = "none";
     })
 }
-inp.onblur = ()=>{
+inp.onblur = ()=>{//热搜出现
     sls.forEach(item=>{
         item.style.display = "block";
     })
 }
-for(let i = 0;i < s_btns.length;i++){
+for(let i = 0;i < s_btns.length;i++){//首页中部简单轮播图
     s_btns[i].onmouseover = ()=>{
         for(let j = 0;j < s_btns.length;j++){
             s_btns[j].id = "";
@@ -330,7 +353,7 @@ for(let i = 0;i < s_btns.length;i++){
         s_imgs[i].style.opacity = "1";
     }
 }
-for(let i = 1;i <= show_list.length;i++){
+for(let i = 1;i <= show_list.length;i++){//二级菜单请求数据并渲染
     show_list[i-1].onmouseover = ()=>{
         second_list_box.style.display = "flex";
         promiseAjax({
@@ -373,7 +396,7 @@ for(let i = 1;i <= show_list.length;i++){
         second_list_box.style.display = "none"
     }
 }
-promiseAjax({
+promiseAjax({//热搜轮播请求数据并渲染
     url:"http://localhost/huaweishangcheng/src/php/goods_list_one.php",
     data:{
         id:2
@@ -448,6 +471,7 @@ promiseAjax({
         });
     });
 });
+//热搜轮播
 if(ggk === 0){
     llbtn.style.display = "none";
 }
@@ -481,6 +505,7 @@ llbtn.onclick = function(){
         flag = true
     },500)
 }
+//首页各商品模块请求并渲染
 boxPromiseAjax(1,"https://res0.vmallres.com/pimages//frontLocation/content/96008994561619980069.png",goods_box_heads[1],230);
 boxPromiseAjax(2,"https://res0.vmallres.com/pimages//frontLocation/content/11119171251617191111.jpg",goods_list_two
 .parentElement.parentElement,472);
@@ -492,6 +517,7 @@ boxPromiseAjax(7,"https://res0.vmallres.com/pimages//frontLocation/content/44589
 boxPromiseAjax(8,"https://res0.vmallres.com/pimages//frontLocation/content/29291553581615519292.png",goods_box_heads[8],472);
 boxPromiseAjax(9,"https://res0.vmallres.com/pimages//frontLocation/content/41067571391617576014.jpg",goods_box_heads[9],472);
 boxPromiseAjax(10,"https://res0.vmallres.com/pimages//frontLocation/content/35728252881615282753.png",active_img2,472);
+//监听滚轮事件控制固定菜单出现
 window.onscroll = function(){
     if(document.documentElement.scrollTop>= 600){
         last_top.style.display = "block";
@@ -504,6 +530,7 @@ window.onscroll = function(){
         fixed_list.style.display = "none"
     }
 }
+//回到顶部功能
 last_top.onclick = function(){
     let newInterval =  setInterval(function(){
         document.documentElement.scrollTop -= 100;
@@ -512,16 +539,16 @@ last_top.onclick = function(){
         }
     },1)
 }
-cart_btn.onclick = function(){
+cart_btn.onclick = function(){//跳转购物车
     location.href = "http://localhost/huaweishangcheng/src/cart.html";
 }
-$(".list-nav>li").click(function(){
+$(".list-nav>li").click(function(){//二级菜单跳转列表页
     if($(this).index() == 13){
         return false;
     }
     window.open(`http://localhost//huaweishangcheng/src/list.html?id=${$(this).index()}`);
 });
-$(".fixed_list").on("click","li",function(){
+$(".fixed_list").on("click","li",function(){//楼层跳转
     if($(this).index()==0){
         $("html,body").animate({scrollTop:2520},500);
     }else if($(this).index()==1){

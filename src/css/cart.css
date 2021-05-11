@@ -199,6 +199,9 @@ ul,ol{
     top: 2px;
     margin-right: 5px;
 }
+.cart_top>div>ul>li:nth-child(1)>label{
+    cursor: pointer;
+}
 .cart_top>div>ul>li:nth-child(2){
     width: 450px;
 }
@@ -464,18 +467,27 @@ ul,ol{
     height: 50px;
     margin-top: 10px;
 }
+.goods_price>div>label{
+    cursor: pointer;
+}
 .goods_price>div>label>input{
     position: relative;
     top: 1px;
     margin-right: 5px;
     margin-left: 40px;
 }
-.goods_price>div>p:nth-child(2) span{
+.goods_price>div>p.rm_all{
+    position: absolute;
+    top: 0;
+    left: 110px;
+    cursor: pointer;
+}
+.goods_price>div>p:nth-child(3) span{
     color: #CA141D;
     font-size: 14px;
     font-weight: bold;
 }
-.goods_price>div>p:nth-child(3) span{
+.goods_price>div>p:nth-child(4) span{
     display: inline-block;
     padding: 0 5px;
     color: #CA141D;
@@ -497,11 +509,57 @@ ul,ol{
     display: inline-block;
     position: absolute;
 }
-.goods_price>div>p:nth-child(2){
+.goods_price>div>p:nth-child(3){
     top: -10px;
     left: 820px;
 }
-.goods_price>div>p:nth-child(3){
+.goods_price>div>p:nth-child(4){
     top: 15px;
     left: 820px;
+}
+.fixed_list2{
+    width: 80px;
+    background-color: white;
+    position: fixed;
+    top: 400px;
+    right: 0;
+    border-radius: 10px;
+}
+.fixed_list2 div{
+    padding-top: 50px;
+    width: 80px;
+    height: 25px;
+    text-align: center;
+    font-size: 14px;
+    color: gray;
+    position: relative;
+    overflow: hidden;
+}
+.fixed_list2>div:hover{
+    color: red;
+}
+.fixed_list2>div::after{
+    position: absolute;
+    content: "";
+    display: block;
+    height: 40px;
+    width: 40px;
+    top: 5px;
+    left: 20px;
+    background-image: url(https://res8.vmallres.com/20210316/images/echannel/icon/icon-common.svg);
+}
+.fixed_list2>div:nth-child(1):after{
+    background-position: 0 -32px;
+}
+.fixed_list2>div:nth-child(2):after{
+    background-position: -40px -32px;
+}
+.fixed_list2>div:nth-child(3):after{
+    background-position: -80px -32px;
+}
+.fixed_list2>div:nth-child(4):after{
+    background-position: -120px -32px;
+}
+#last_top{
+    display: none;
 }

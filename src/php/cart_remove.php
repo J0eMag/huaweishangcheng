@@ -6,3 +6,4 @@ $uname = $_GET["uname"];
 $id = $_GET["id"];
 $id2 = (integer)$id;
 $bool = mysqli_query($con,"delete from user_cart where name='$uname' and good_id=$id2");
+echo json_encode(1);

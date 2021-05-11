@@ -1,5 +1,7 @@
 let show_list = document.querySelectorAll(".list_nav>li");
 let second_list_boxx = document.querySelector("#second_list_box");
+let last_top = document.querySelector("#last_top");
+let cart_btn = document.querySelector(".cart_btn");
 if(window.location.search){
     let tj_type= getParams("id");
     function getParams(key) {
@@ -61,8 +63,15 @@ $(".second_list_two").parent().hover(()=>{
 },()=>{
     $(".second_list_two")[0].style.display = "none"
 });
+//列表页二级菜单出现并设置跳转事件(不在新标签页打开)
 $(".second_list").click(function(){
     $(this).parent().next().toggleClass("shua");
+    $(".shadow").click(function(){
+        if($(this).index() == 13){
+            return false;
+        }
+        location.href = ("http://localhost//huaweishangcheng/src/list.html?id="+($(this).index()-0+3));
+    });
 });
 $(".none").focus(function(){
     $(".sls").css({display:"none"});
@@ -150,4 +159,24 @@ if(document.cookie){
         $(".login_p").html('您好，请<a href="http://localhost/huaweishangcheng/src/login.html">登录 </a><span> / </span><a href="http://localhost/huaweishangcheng/src/register.html">注册</a>')
         $(this).remove();
     })
+}
+//监听滚轮事件控制固定菜单出现
+window.onscroll = function(){
+    if(document.documentElement.scrollTop>= 600){
+        last_top.style.display = "block";
+    }else{
+        last_top.style.display = "none";
+    }
+}
+//回到顶部功能
+last_top.onclick = function(){
+    let newInterval =  setInterval(function(){
+        document.documentElement.scrollTop -= 100;
+        if(document.documentElement.scrollTop <= 0){
+            clearInterval(newInterval);
+        }
+    },1)
+}
+cart_btn.onclick = function(){//跳转购物车
+    location.href = "http://localhost/huaweishangcheng/src/cart.html";
 }

@@ -21,6 +21,7 @@ $("button").click(function(){
                     var date = new Date();
                     date.setTime(date.getTime()-1000*60*60*8+80000);
                     document.cookie =`name=${res.data};path=/;`
+                    //localStorage.setItem("name",res.data);本地存储登录
                     location.href = "http://localhost//huaweishangcheng/src/home.html";
                 },1000);
                 return false;
