@@ -23,4 +23,5 @@ if($row){
     }
 }else{
     mysqli_query($con,"insert user_cart(name,good_id,good_num) values('$uname',$id2,$num2)");
-}
+};
+echo json_encode(1);

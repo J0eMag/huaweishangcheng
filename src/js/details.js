@@ -184,20 +184,22 @@ $(".add_cart").click(function(){
     // document.cookie =`num=${$(".price_box input").val()};expires=${date};path=/;`
     if(document.cookie){
         $.get("http://localhost//huaweishangcheng/src/php/change_cart.php",{id:tj_type,num:$(".price_box input").val(),uname:document.cookie.slice(5)},function(res){ 
-            // layer.confirm(`${$(".good_name").text()}成功加入购物车`, {
-            //     btn: ['再逛逛','去结算']
-            // },function(){
-            //     parent.layer.closeAll();
-            // },function(){
-            //     location.href = "http://localhost/huaweishangcheng/src/cart.html";
-            // });
             layer.confirm(`${$(".good_name").text()}成功加入购物车`, {
-                btn: ['再逛逛','去结算'] //按钮
-              }, function(){
+                icon:1,
+                skin: 'layui-layer-molv',
+                btn: ['再逛逛','去结算']
+            },function(){
                 parent.layer.closeAll();
-              }, function(){
+            },function(){
                 location.href = "http://localhost/huaweishangcheng/src/cart.html";
-              });
+            });
+            // layer.confirm(`${$(".good_name").text()}成功加入购物车`, {
+            //     btn: ['再逛逛','去结算'] //按钮
+            //   }, function(){
+            //     parent.layer.closeAll();
+            //   }, function(){
+            //     location.href = "http://localhost/huaweishangcheng/src/cart.html";
+            //   });
         },"json");
     }else{
         layer.msg("请先登录再操作");
