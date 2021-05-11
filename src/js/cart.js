@@ -284,9 +284,6 @@ if(document.cookie){
         },()=>{
             parent.layer.closeAll();
         });
-        // var data = new Date();
-        // data.setTime(data.getTime()-1000*60*60*8-1); // 当前时间的上一秒
-        // document.cookie ='id=0;expires='+data+";path=/";
     })
     if($(".cart_mouther li").length == 0){
         $(".cart").css({display:"block"});
@@ -333,9 +330,6 @@ $(".rm_all").click(function(){
             }
             $(".goods_box li").remove();
             parent.layer.closeAll();
-            // $(".cart_mouther li").remove();
-            // },()=>{
-            // parent.layer.closeAll();
         });
     }else{
         layer.msg("您还未选中任何商品");
