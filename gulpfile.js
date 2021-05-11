@@ -140,7 +140,7 @@ function server(cb){
     // 任务完成然后生成文件，但是任务完成立马就打开浏览器，会造成任务完成文件还没有生成的时候，打开了浏览器 - 浏览器中打不开这个文件
     // 自动打开浏览器
     setTimeout(function(){
-        open('http://localhost:9527/login.html')
+        open('http://localhost:9527/home.html')
     },1000)
 }
 // 清空目标文件夹
