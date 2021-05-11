@@ -183,6 +183,8 @@ if(document.cookie){
             // } 
         }
     },"json")
+}else{
+    $(".top_banner").css("display","block")
 }
 // $.ajaxSettings.async = false;
 // $.get("http://localhost//huaweishangcheng/src/php/goods_box.php",{pid:pid},function(res){
@@ -278,6 +280,7 @@ if(document.cookie){
             $(".login_p").html('您好，请<a href="http://localhost/huaweishangcheng/src/login.html">登录 </a><span> / </span><a href="http://localhost/huaweishangcheng/src/register.html">注册</a>')
             $(this).remove();
             parent.layer.closeAll();
+            $(".top_banner").css("display","block");
         },()=>{
             parent.layer.closeAll();
         });
@@ -301,38 +304,43 @@ if(document.cookie){
 }
 //删除选中商品功能
 $(".rm_all").click(function(){
-    layer.confirm('您确定要删除所选商品吗？', {
-        btn: ['确定','取消']
-    },()=>{
-        let brr = [];
-        $(".goods_box input:checked").each(function(i,v){
-            $i = $(v).parent()
-                    .siblings()
-                    .last()
-                    .children(".del")
-                    .attr("index");
-            brr.push($i);
-        })
-        for(let j = 0;j < brr.length;j++){
-            $.get("http://localhost//huaweishangcheng/src/php/cart_remove.php",{uname:document.cookie.slice(5),id:brr[j]},(res)=>{
-                if(!$(".cart_mouther li").length){
-                    $(".cart").css({display:"block"});
-                    $(".goods_price").css({display:"none"});
-                    $(".cart_top").css({display:"none"});
-                }else{
-                    $(".cart").css({display:"none"});
-                    $(".goods_price").css({display:"block"});
-                    $(".cart_top").css({display:"block"});
-                }
-                down()
-            },"json");
-        }
-        $(".cart_mouther li").remove();
-        parent.layer.closeAll();
-        // $(".cart_mouther li").remove();
-        // },()=>{
-        // parent.layer.closeAll();
-    });
+    if($(".goods_box input:checked").length !== 0){
+        layer.confirm('您确定要删除所选商品吗？', {
+            btn: ['确定','取消']
+        },()=>{
+            let brr = [];
+            $(".goods_box input:checked").each(function(i,v){
+                $i = $(v).parent()
+                        .siblings()
+                        .last()
+                        .children(".del")
+                        .attr("index");
+                brr.push($i);
+            })
+            for(let j = 0;j < brr.length;j++){
+                $.get("http://localhost//huaweishangcheng/src/php/cart_remove.php",{uname:document.cookie.slice(5),id:brr[j]},(res)=>{
+                    if(!$(".cart_mouther li").length){
+                        $(".cart").css({display:"block"});
+                        $(".goods_price").css({display:"none"});
+                        $(".cart_top").css({display:"none"});
+                    }else{
+                        $(".cart").css({display:"none"});
+                        $(".goods_price").css({display:"block"});
+                        $(".cart_top").css({display:"block"});
+                    }
+                    down()
+                },"json");
+            }
+            $(".goods_box li").remove();
+            parent.layer.closeAll();
+            // $(".cart_mouther li").remove();
+            // },()=>{
+            // parent.layer.closeAll();
+        });
+    }else{
+        layer.msg("您还未选中任何商品");
+        return false;
+    }
 });
 //监听滚轮事件控制固定菜单出现
 window.onscroll = function(){
