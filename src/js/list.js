@@ -2,6 +2,97 @@ let show_list = document.querySelectorAll(".list_nav>li");
 let second_list_boxx = document.querySelector("#second_list_box");
 let last_top = document.querySelector("#last_top");
 let cart_btn = document.querySelector(".cart_btn");
+//设置全部商品页懒加载以及直接进入列表页默认显示商品
+function show(){
+        $(".box>div").html("");
+        let flag = 1;
+        $.get("http://localhost//huaweishangcheng/src/php/goods_box.php",function(res){
+        let arr = [];
+        for(let i = 0;i < Math.ceil(res.length/20) - 1;i++){
+            arr[i] = res.slice(i*20,i*20+20);
+        }
+        arr[Math.ceil(res.length/20)-1] = res.slice(Math.floor(res.length/20)*20,res.length);
+        for(let i = 0;i < arr[0].length;i++){
+            $div = $(`<div class='mini_box' index=${arr[0][i].id}></div>`);
+            let str = "";
+            str = `
+            <img src=${arr[0][i].url}>
+            <p>${arr[0][i].name}</p>
+            <p>￥${arr[0][i].price}</p>
+            <span>多款可选</span>
+            <p>限时特价</p>
+            <p>多人评价   非常好评</p>
+            `;
+            $div.html(str);
+            $(".box>div").append($div)
+            $div.click(function(){
+                window.open(`http://localhost//huaweishangcheng/src/details.html?id=${$(this).attr("index")}`);
+            })
+        }
+        window.onscroll = function(){
+            if(document.documentElement.scrollTop>= 1025 && flag === 1){
+                for(let i = 0;i < arr[1].length;i++){
+                    $div = $(`<div class='mini_box' index=${arr[1][i].id}></div>`);
+                    let str = "";
+                    str = `
+                    <img src=${arr[1][i].url}>
+                    <p>${arr[1][i].name}</p>
+                    <p>￥${arr[1][i].price}</p>
+                    <span>多款可选</span>
+                    <p>限时特价</p>
+                    <p>多人评价   非常好评</p>
+                    `;
+                    $div.html(str);
+                    $(".box>div").append($div)
+                    $div.click(function(){
+                        window.open(`http://localhost//huaweishangcheng/src/details.html?id=${$(this).attr("index")}`);
+                    })
+                }
+            flag++;
+        }
+        if(document.documentElement.scrollTop>= 2860 && flag === 2){
+            for(let i = 0;i < arr[2].length;i++){
+                $div = $(`<div class='mini_box' index=${arr[2][i].id}></div>`);
+                let str = "";
+                str = `
+                <img src=${arr[2][i].url}>
+                <p>${arr[2][i].name}</p>
+                <p>￥${arr[2][i].price}</p>
+                <span>多款可选</span>
+                <p>限时特价</p>
+                <p>多人评价   非常好评</p>
+                `;
+                $div.html(str);
+                $(".box>div").append($div)
+                $div.click(function(){
+                    window.open(`http://localhost//huaweishangcheng/src/details.html?id=${$(this).attr("index")}`);
+                })
+            }
+        flag++;
+        }
+        if(document.documentElement.scrollTop>= 4665 && flag === 3){
+            for(let i = 0;i < arr[3].length;i++){
+                $div = $(`<div class='mini_box' index=${arr[3][i].id}></div>`);
+                let str = "";
+                str = `
+                <img src=${arr[3][i].url}>
+                <p>${arr[3][i].name}</p>
+                <p>￥${arr[3][i].price}</p>
+                <span>多款可选</span>
+                <p>限时特价</p>
+                <p>多人评价   非常好评</p>
+                `;
+                $div.html(str);
+                $(".box>div").append($div)
+                $div.click(function(){
+                    window.open(`http://localhost//huaweishangcheng/src/details.html?id=${$(this).attr("index")}`);
+                })
+            }
+        flag++;
+        }
+        };
+        },"json");
+}
 if(window.location.search){
     let tj_type= getParams("id");
     function getParams(key) {
@@ -33,25 +124,8 @@ if(window.location.search){
         }
     },"json");
 }else{
-    $.get("http://localhost//huaweishangcheng/src/php/goods_box.php",{id:1},function(res){
-        for(let i = 0;i < res.length;i++){
-            $div = $(`<div class='mini_box' index=${res[i].id}></div>`);
-            let str = "";
-            str = `
-            <img src=${res[i].url}>
-            <p>${res[i].name}</p>
-            <p>￥${res[i].price}</p>
-            <span>多款可选</span>
-            <p>限时特价</p>
-            <p>多人评价   非常好评</p>
-            `;
-            $div.html(str);
-            $(".box>div").append($div);
-            $div.click(function(){
-                window.open(`http://localhost//huaweishangcheng/src/details.html?id=${$(this).attr("index")}`);
-            })
-        }
-    },"json");
+    show()
+    // show()
 }
 $(".second_list_one").parent().hover(()=>{
     $(".second_list_one")[0].style.display = "block"
@@ -124,26 +198,30 @@ for(let i = 1;i <= show_list.length;i++){
 }
 $(".goods_nav ul li").click(function(){
     $(this).addClass("goods_nav_active").siblings().removeClass("goods_nav_active");
-    $.get("http://localhost//huaweishangcheng/src/php/goods_box.php",{id:$(this).index()+1},function(res){
-        $(".box>div").html("")
-        for(let i = 0;i < res.length;i++){
-            $div = $(`<div class='mini_box' index=${res[i].id}></div>`);
-            let str = "";
-            str = `
-            <img src=${res[i].url}>
-            <p>${res[i].name}</p>
-            <p>￥${res[i].price}</p>
-            <span>多款可选</span>
-            <p>限时特价</p>
-            <p>多人评价   非常好评</p>
-            `;
-            $div.html(str);
-            $(".box>div").append($div)
-            $div.click(function(){
-                window.open(`http://localhost//huaweishangcheng/src/details.html?id=${$(this).attr("index")}`);
-            })
-        }
-    },"json")
+    if($(this).index() === 0){
+        show();
+    }else{
+        $.get("http://localhost//huaweishangcheng/src/php/goods_box.php",{id:$(this).index()},function(res){
+            $(".box>div").html("")
+            for(let i = 0;i < res.length;i++){
+                $div = $(`<div class='mini_box' index=${res[i].id}></div>`);
+                let str = "";
+                str = `
+                <img src=${res[i].url}>
+                <p>${res[i].name}</p>
+                <p>￥${res[i].price}</p>
+                <span>多款可选</span>
+                <p>限时特价</p>
+                <p>多人评价   非常好评</p>
+                `;
+                $div.html(str);
+                $(".box>div").append($div)
+                $div.click(function(){
+                    window.open(`http://localhost//huaweishangcheng/src/details.html?id=${$(this).attr("index")}`);
+                })
+            }
+        },"json")
+    } 
 });
 if(document.cookie){
     $(".login_li").text("您好");
@@ -161,13 +239,13 @@ if(document.cookie){
     })
 }
 //监听滚轮事件控制固定菜单出现
-window.onscroll = function(){
+window.addEventListener("scroll",function(){
     if(document.documentElement.scrollTop>= 600){
         last_top.style.display = "block";
     }else{
         last_top.style.display = "none";
     }
-}
+});
 //回到顶部功能
 last_top.onclick = function(){
     let newInterval =  setInterval(function(){

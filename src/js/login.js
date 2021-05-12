@@ -22,7 +22,11 @@ $("button").click(function(){
                     date.setTime(date.getTime()-1000*60*60*8+80000);
                     document.cookie =`name=${res.data};path=/;`
                     //localStorage.setItem("name",res.data);本地存储登录
-                    location.href = "http://localhost//huaweishangcheng/src/home.html";
+                    if(document.referrer === "http://localhost//huaweishangcheng/src/register.html"){
+                        location.href = "http://localhost//huaweishangcheng/src/home.html";
+                    }else{
+                        window.history.go(-1)
+                    }
                 },1000);
                 return false;
             }else if(status === 2){

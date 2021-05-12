@@ -636,6 +636,7 @@ ul,ol{
     overflow: hidden;
 }
 .fixed_list2>div:hover{
+    cursor: pointer;
     color: red;
 }
 .fixed_list2>div::after{

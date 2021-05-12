@@ -300,13 +300,13 @@ ul,ol{
 .goods_nav>ul>li{
     list-style: none;
     float: left;
-    width: 100px;
+    width: 93px;
     font-size: 12px;
     height: 40px;
     line-height: 40px;
     text-align: center;
     background-color: white;
-    margin: 10px;
+    margin: 8px;
     border-radius: 20px;
 }
 .goods_nav>ul>li:hover{
@@ -553,6 +553,7 @@ ul,ol{
     overflow: hidden;
 }
 .fixed_list2>div:hover{
+    cursor: pointer;
     color: red;
 }
 .fixed_list2>div::after{

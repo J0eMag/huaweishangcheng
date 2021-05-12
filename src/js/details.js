@@ -142,7 +142,7 @@ $(".price_box input").blur(function(){
         val(parseInt($(this).val()))
 })
 //根据参数请求商品图片信息
-$.get("http://localhost//huaweishangcheng/src/php/goods_img.php",{id:tj_type},function(res){
+    $.get("http://localhost//huaweishangcheng/src/php/goods_img.php",{id:tj_type},function(res){
         let obj = res[0];
         let arr = [];
         var z = 0;
@@ -158,9 +158,8 @@ $.get("http://localhost//huaweishangcheng/src/php/goods_img.php",{id:tj_type},fu
                 break;
             }
             arr.push(obj[i]);
-            console.log(z);
         }
-        if(arr.length>=7){
+        if(arr.length===7){
             arr.pop();
         }
         for(let j = 1;j < arr.length;j++){
@@ -186,11 +185,12 @@ $.get("http://localhost//huaweishangcheng/src/php/goods_img.php",{id:tj_type},fu
         for(let j in res[0]){
             if(res[0][j] == null){
                 delete res[0][j];
+                continue;
             }
             brr.push(res[0][j]);
         }
         let crr = brr.slice(arr.length+1);
-       for(let x = 0;x < crr.length;x++){
+        for(let x = 0;x < crr.length;x++){
             $img = $(`<img class="goods_iimmgg" src=${crr[x]}>`);
             $("#goods_iimmgg").append($img);
        }
@@ -199,6 +199,7 @@ $.get("http://localhost//huaweishangcheng/src/php/goods_img.php",{id:tj_type},fu
     },"json");
     //根据地址传值请求商品名、价格等文本数据
 $.get("http://localhost//huaweishangcheng/src/php/goods_box.php",{pid:tj_type},function(res){
+    $(document).attr("title",res[0].name);
     $(".good_name")
         .text(res[0].name)
         .next()
@@ -206,8 +207,7 @@ $.get("http://localhost//huaweishangcheng/src/php/goods_box.php",{pid:tj_type},f
     $(".good_price")
         .text("￥"+res[0].price)
 },"json");
-//为添加购物车按钮添加事件，更改数据库数据
-$(".add_cart").click(function(){
+$(".add_cart").click(function(){//为添加购物车按钮添加事件，更改数据库数据
     if(document.cookie){
         $.get("http://localhost//huaweishangcheng/src/php/change_cart.php",{id:tj_type,num:$(".price_box input").val(),uname:document.cookie.slice(5)},function(res){ 
             layer.confirm(`${$(".good_name").text()}成功加入购物车`, {
@@ -221,12 +221,18 @@ $(".add_cart").click(function(){
             });
         },"json");
     }else{
-        layer.msg("请先登录再操作");
-        return false;
+        layer.confirm("请先登录再操作", {
+            skin: 'layui-layer-lan',
+            btn: ['登录','取消']
+        },function(){
+            location.href = "http://localhost//huaweishangcheng/src/login.html";
+            parent.layer.closeAll();
+        },function(){
+            parent.layer.closeAll();
+        });
     }
 });
-//如果已是登陆状态则显示已登陆的页面
-if(document.cookie){
+if(document.cookie){//如果已是登陆状态则显示已登陆的页面
     $(".login_li").text("您好");
     $(".name_li").text(document.cookie.slice(5).slice(0,2)+"**")
     $(".login_p").text("欢迎您,"+document.cookie.slice(5).slice(0,2)+"**")
@@ -241,16 +247,14 @@ if(document.cookie){
         $(this).remove();
     })
 }
-//监听滚轮事件控制固定菜单出现
-window.onscroll = function(){
+window.onscroll = function(){//监听滚轮事件控制固定菜单出现
     if(document.documentElement.scrollTop>= 600){
         last_top.style.display = "block";
     }else{
         last_top.style.display = "none";
     }
 }
-//回到顶部功能
-last_top.onclick = function(){
+last_top.onclick = function(){//回到顶部功能
     let newInterval =  setInterval(function(){
         document.documentElement.scrollTop -= 100;
         if(document.documentElement.scrollTop <= 0){

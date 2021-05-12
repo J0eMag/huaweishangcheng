@@ -11,10 +11,18 @@ if($id){
         $arr[] = $row;
     };
 }else{
-    $res = mysqli_query($con,"select * from goods_box where id = '$pid'");//列表页请求
-    $arr = [];
-    while($row = mysqli_fetch_assoc($res)){
+    if($pid){
+        $res = mysqli_query($con,"select * from goods_box where id = '$pid'");//详情页请求
+        $arr = [];
+        while($row = mysqli_fetch_assoc($res)){
+            $arr[] = $row;
+        };
+    }else{
+        $res = mysqli_query($con,"select * from goods_box");//列表页请求
+        $arr = [];
+        while($row = mysqli_fetch_assoc($res)){
         $arr[] = $row;
     };
+    }
 }
 echo json_encode($arr);
