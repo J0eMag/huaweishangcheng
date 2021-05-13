@@ -55,9 +55,9 @@ function moveCss(cb){
     // 压缩
     .pipe(_.cleanCss())
     // 重命名
-    .pipe(_.rename({
-        suffix:".min"
-    }))
+    // .pipe(_.rename({
+    //     suffix:".min"
+    // }))
     // 保存
     .pipe(dest('./dist/css'))
     .pipe(_.connect.reload())
@@ -79,15 +79,19 @@ function handlerJS(cb){
     // 压缩
     .pipe(_.uglify())
     // 重命名
-    .pipe(_.rename({
-        suffix:".min"
-    }))
+    // .pipe(_.rename({
+    //     suffix:".min"
+    // }))
     // 保存
     .pipe(dest("./dist/js"))
     .pipe(_.connect.reload())
     cb()
 }
-
+function moveSql(cb){
+    src('./src/lx.sql')
+    .pipe(dest("./dist"))
+    cb()
+}
 // 压缩html
 function handlerHTML(cb){
     // 读取
@@ -137,6 +141,7 @@ function server(cb){
     watch('./src/php/*.php',{ignoreInitial:false},handlerPHP)
     watch(['./src/images/*.jpg','./src/images/*.png'],{ignoreInitial:false},handlerImg)
     watch('./src/js/layer',{ignoreInitial:false},moveJs)
+    watch('./src/lx.sql',{ignoreInitial:false},moveSql)
     // 任务完成然后生成文件，但是任务完成立马就打开浏览器，会造成任务完成文件还没有生成的时候，打开了浏览器 - 浏览器中打不开这个文件
     // 自动打开浏览器
     setTimeout(function(){
